@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Fizik Dersi - 9. Sınıf</title>
+<style>
+  :root{
+    --accent:#0b6cff;
+    --card:#ffffff;
+    --bg:#f3f6fb;
+    --muted:#666;
+  }
+  html,body{height:100%;margin:0;font-family:Inter, Roboto, Arial, sans-serif;background:var(--bg);color:#222;}
+  header{background:linear-gradient(90deg,#0b6cff 0%, #5cc1ff 100%);color:white;padding:28px 24px;display:flex;align-items:center;gap:18px;box-shadow:0 4px 18px rgba(6,30,80,0.12);}
+  .logo{width:64px;height:64px;border-radius:8px;background:linear-gradient(135deg,#ffffff30,#ffffff10);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px}
+  .site-title{font-size:20px;font-weight:700;line-height:1;color:white}
+  .site-sub{font-size:13px;opacity:.95}
+  main{padding:28px;max-width:1100px;margin:24px auto;display:grid;grid-template-columns:1fr 340px;gap:24px;align-items:start}
+  .card{background:var(--card);border-radius:10px;padding:18px;box-shadow:0 6px 20px rgba(18,37,77,0.06)}
+  h2{margin:0 0 10px 0;font-size:18px}
+  p.lead{margin:0;color:var(--muted)}
+  .lesson{display:flex;flex-direction:column;gap:12px}
+  .topic{padding:12px;border-radius:8px;background:linear-gradient(180deg,#fbfdff,#f7fbff);display:flex;gap:12px;align-items:center}
+  .topic .num{background:var(--accent);color:white;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700}
+  .sidebar h3{margin-top:0}
+  .resources{display:flex;flex-direction:column;gap:8px}
+  .resource{padding:10px;border-radius:8px;background:#f6f9ff;border:1px solid #e8f0ff;font-size:14px;color:#123}
+  footer{max-width:1100px;margin:20px auto;padding:10px 18px;color:#666;font-size:13px}
+  .hint{margin-top:12px;color:#888;font-size:13px}
+
+  /* iframe overlay */
+  #gameFrameWrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .35s ease;z-index:999;}
+  #gameFrameWrap.visible{opacity:1;pointer-events:all}
+  #gameFrame{width:100%;height:100%;border:0;background:black;border-radius:0}
+
+  /* close button */
+  .closeBtn{position:fixed;right:14px;top:14px;z-index:1001;background:#111;color:#fff;padding:10px 12px;border-radius:8px;border:0;cursor:pointer;font-weight:600;box-shadow:0 6px 18px rgba(0,0,0,0.4)}
+
+  /* fake menu and buttons */
+  .fake-menu{display:flex;gap:12px;margin-top:12px}
+  .fake-btn{padding:8px 12px;border-radius:6px;background:#fff;border:1px solid #e6eefc;color:#0a3aa6;font-weight:600;font-size:13px}
+  .footer-note{font-size:12px;color:#999;margin-top:10px}
+
+  @media (max-width:900px){
+    main{grid-template-columns:1fr; padding:16px}
+    .sidebar{order:2}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo" aria-hidden>FZ</div>
+  <div>
+    <div class="site-title">Fizik Dersi - 9. Sınıf</div>
+    <div class="site-sub">Kuvvet, enerji ve hareket - Öğretmen: Dr. A. Yılmaz</div>
+  </div>
+</header>
+
+<main>
+  <section class="card">
+    <h2>Bugünün Konusu: Kuvvet ve Hareket</h2>
+    <p class="lead">Bugünkü derste Newton'un hareket yasalarını ve serbest düşme konusunu göreceğiz. Aşağıdaki özet ve örnek sorulara göz atın.</p>
+
+    <div style="height:14px"></div>
+
+    <div class="lesson">
+      <div class="topic">
+        <div class="num">1</div>
+        <div>
+          <strong>Newton'un 1. Yasası (Eylemsizlik)</strong>
+          <div style="color:var(--muted);font-size:13px">Bir cisim üzerine herhangi bir net kuvvet etkimezse, hareket durumunu korur.</div>
+        </div>
+      </div>
+
+      <div class="topic">
+        <div class="num">2</div>
+        <div>
+          <strong>Newton'un 2. Yasası</strong>
+          <div style="color:var(--muted);font-size:13px">F = m · a (Kuvvet = Kütle × İvme)</div>
+        </div>
+      </div>
+
+      <div class="topic">
+        <div class="num">3</div>
+        <div>
+          <strong>Serbest Düşme</strong>
+          <div style="color:var(--muted);font-size:13px">Yerden uzaklık etkisi küçükse, g ≈ 9.81 m/s² kullanılır.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="height:16px"></div>
+
+    <div>
+      <h3>Örnek Soru</h3>
+      <p>10 kg kütleli bir cisim 2 m/s² ivme ile hızlanıyorsa, uygulanan net kuvvet kaç N'dir?</p>
+      <div style="padding:12px;background:#fbfbfb;border-radius:8px;border:1px solid #eee;font-weight:600">Çözüm: F = m·a = 10 × 2 = 20 N</div>
+    </div>
+
+    <div style="height:20px"></div>
+
+    <div class="fake-menu">
+      <div class="fake-btn">Ders Notları</div>
+      <div class="fake-btn">Ödev</div>
+      <div class="fake-btn">Sınav Takvimi</div>
+    </div>
+
+    <div class="hint">İpucu: Sitede bazı klavye kısayolları çalışmaktadır. (Örn. öğrenim amaçlı.)</div>
+  </section>
+
+  <aside class="card sidebar">
+    <h3>Kaynaklar</h3>
+    <div class="resources">
+      <div class="resource">Bölüm 3: Newton Hareketi (PDF)</div>
+      <div class="resource">Laboratuvar: Serbest Düşme Deneyi (Video)</div>
+      <div class="resource">Ek Okuma: Enerji ve İş</div>
+    </div>
+
+    <div class="footer-note">İletişim: fizik@okul.edu.tr</div>
+  </aside>
+</main>
+
+<footer>
+  Bu görünüm okul için hazırlanmış örnek içeriktir. Sürüm 1.0
+</footer>
+
+<!-- hidden iframe overlay -->
+<div id="gameFrameWrap" aria-hidden>
+  <button class="closeBtn" title="Kapat (Esc)">Kapat ✕</button>
+  <iframe id="gameFrame" src="" frameborder="0"></iframe>
+</div>
+
+<script>
+(function(){
+  const SECRET = 'undertale'; // secret key sequence
+  const TARGET_IFRAME = 'https://cdn.jsdelivr.net/gh/just345/sdfsssss@main/undertale.html'; // CDN URL
+  const maxBuffer = SECRET.length + 6;
+  let buffer = '';
+
+  function showGame() {
+    const wrap = document.getElementById('gameFrameWrap');
+    const iframe = document.getElementById('gameFrame');
+    if (!iframe.src) iframe.src = TARGET_IFRAME;
+    wrap.classList.add('visible');
+    wrap.setAttribute('aria-hidden','false');
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    wrap.querySelector('.closeBtn').style.display = 'inline-block';
+  }
+
+  function hideGame() {
+    const wrap = document.getElementById('gameFrameWrap');
+    wrap.classList.remove('visible');
+    wrap.setAttribute('aria-hidden','true');
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+  }
+
+  document.querySelector('.closeBtn').addEventListener('click', hideGame);
+  window.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') hideGame();
+  });
+
+  window.addEventListener('keydown', function(e){
+    if (e.ctrlKey || e.altKey || e.metaKey) return;
+    const k = e.key.length===1?e.key:'';
+    if (!k) return;
+    buffer += k.toLowerCase();
+    if (buffer.length > maxBuffer) buffer = buffer.slice(-maxBuffer);
+    if (buffer.endsWith(SECRET.toLowerCase())) {
+      showGame();
+      buffer = '';
+    }
+  });
+
+  // 5-click logo combo
+  const logo = document.querySelector('.logo');
+  let clicks = 0, last=0;
+  logo.addEventListener('click', function(){
+    const now = Date.now();
+    if (now-last<800) clicks++; else clicks=1;
+    last = now;
+    if (clicks>=5){showGame(); clicks=0;}
+  });
+})();
+</script>
+
+</body>
+</html>
