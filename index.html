@@ -30,8 +30,8 @@
   .hint{margin-top:12px;color:#888;font-size:13px}
 
   /* iframe overlay */
-  #gameFrameWrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .35s ease;z-index:999;}
-  #gameFrameWrap.visible{opacity:1;pointer-events:all}
+  #gameFrameWrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .35s ease;z-index:999;inert;}
+  #gameFrameWrap.visible{opacity:1;pointer-events:all;inert:false;}
   #gameFrame{width:100%;height:100%;border:0;background:black;border-radius:0}
 
   /* close button */
@@ -127,7 +127,7 @@
 </footer>
 
 <!-- hidden iframe overlay -->
-<div id="gameFrameWrap" aria-hidden>
+<div id="gameFrameWrap" inert>
   <button class="closeBtn" title="Kapat (Esc)">Kapat ✕</button>
   <iframe id="gameFrame" src="" frameborder="0"></iframe>
 </div>
@@ -135,41 +135,42 @@
 <script>
 (function(){
   const SECRET = 'undertale'; // secret key sequence
-  const TARGET_IFRAME = 'https://just345.github.io/sdfsssss/undertale.html'; // raw GitHub URL
-  const maxBuffer = SECRET.length + 6;
+  const TARGET_IFRAME = 'https://just345.github.io/sdfsssss/undertale.html'; // use jsDelivr
+
+  const wrap = document.getElementById('gameFrameWrap');
+  const iframe = document.getElementById('gameFrame');
+  const closeBtn = wrap.querySelector('.closeBtn');
+
   let buffer = '';
+  const maxBuffer = SECRET.length + 6;
 
   function showGame() {
-    const wrap = document.getElementById('gameFrameWrap');
-    const iframe = document.getElementById('gameFrame');
     if (!iframe.src) iframe.src = TARGET_IFRAME;
     wrap.classList.add('visible');
-    wrap.setAttribute('aria-hidden','false');
+    wrap.inert = false;
     document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
-    wrap.querySelector('.closeBtn').style.display = 'inline-block';
   }
 
   function hideGame() {
-    const wrap = document.getElementById('gameFrameWrap');
     wrap.classList.remove('visible');
-    wrap.setAttribute('aria-hidden','true');
+    wrap.inert = true;
     document.documentElement.style.overflow = '';
     document.body.style.overflow = '';
   }
 
-  document.querySelector('.closeBtn').addEventListener('click', hideGame);
+  closeBtn.addEventListener('click', hideGame);
   window.addEventListener('keydown', function(e){
-    if (e.key === 'Escape') hideGame();
+    if(e.key==='Escape') hideGame();
   });
 
   window.addEventListener('keydown', function(e){
     if (e.ctrlKey || e.altKey || e.metaKey) return;
     const k = e.key.length===1?e.key:'';
-    if (!k) return;
+    if(!k) return;
     buffer += k.toLowerCase();
-    if (buffer.length > maxBuffer) buffer = buffer.slice(-maxBuffer);
-    if (buffer.endsWith(SECRET.toLowerCase())) {
+    if(buffer.length > maxBuffer) buffer = buffer.slice(-maxBuffer);
+    if(buffer.endsWith(SECRET)){
       showGame();
       buffer = '';
     }
@@ -177,16 +178,15 @@
 
   // 5-click logo combo
   const logo = document.querySelector('.logo');
-  let clicks = 0, last=0;
+  let clicks=0,last=0;
   logo.addEventListener('click', function(){
     const now = Date.now();
-    if (now-last<800) clicks++; else clicks=1;
-    last = now;
-    if (clicks>=5){showGame(); clicks=0;}
+    if(now-last<800) clicks++; else clicks=1;
+    last=now;
+    if(clicks>=5){showGame(); clicks=0;}
   });
 })();
 </script>
 
 </body>
 </html>
-
