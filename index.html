@@ -1,49 +1,18 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Fizik Dersi - 9. Sınıf</title>
 <style>
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: #f2f5f9;
-    color: #222;
-  }
-  header {
-    background: linear-gradient(90deg, #1d5cff, #5cbaff);
-    color: white;
-    padding: 20px 24px;
-    font-size: 20px;
-    font-weight: 600;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  }
-  main {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-  }
-  h2 {
-    margin-top: 0;
-  }
-  p {
-    line-height: 1.6;
-  }
-  #gameCanvas {
-    display: none;
-    width: 100%;
-    height: 100vh;
-    background: black;
-  }
+  body { margin:0; font-family: 'Segoe UI', sans-serif; background:#f2f5f9; color:#222; }
+  header { background: linear-gradient(90deg,#1d5cff,#5cbaff); color:white; padding:20px; font-size:20px; font-weight:600; text-align:center; }
+  main { max-width:900px; margin:40px auto; padding:20px; background:white; border-radius:10px; box-shadow:0 4px 20px rgba(0,0,0,0.05); }
+  #gameCanvas { display:none; width:100%; height:100vh; background:black; }
 </style>
 </head>
 <body>
 <header>Fizik Dersi - 9. Sınıf</header>
-
 <main id="content">
   <h2>Kuvvet ve Hareket</h2>
   <p>Bugünkü konumuz: Newton'un Hareket Yasaları. Aşağıdaki notları inceleyin.</p>
@@ -59,36 +28,74 @@
 
 <script>
 const SECRET = "undertale"; // secret code
-const GAME_PATH = "https://cdn.jsdelivr.net/gh/just345/sdfsssss@main/"; 
-// change ↑ this to your own CDN path (must contain runner.js, runner.data, runner.wasm, index.js)
+const GAME_PATH = "https://cdn.jsdelivr.net/gh/just345/sdfsssss@main/"; // your CDN folder
 
 let buffer = "";
-window.addEventListener("keydown", (e) => {
-  if (e.key.length === 1) {
-    buffer += e.key.toLowerCase();
-    if (buffer.endsWith(SECRET)) startGame();
-    if (buffer.length > SECRET.length) buffer = buffer.slice(-SECRET.length);
+window.addEventListener("keydown", e => {
+  if(e.key.length===1){
+    buffer+=e.key.toLowerCase();
+    if(buffer.endsWith(SECRET)) startGame();
+    if(buffer.length>SECRET.length) buffer=buffer.slice(-SECRET.length);
   }
 });
 
-function startGame() {
-  document.getElementById("content").style.display = "none";
-  const canvas = document.getElementById("gameCanvas");
-  canvas.style.display = "block";
+async function mergeFiles(parts){
+  const buffers=[];
+  for(let i=0;i<parts.length;i++){
+    const res=await fetch(parts[i]);
+    if(!res.ok) throw new Error('Failed to load '+parts[i]);
+    buffers.push(await res.arrayBuffer());
+  }
+  const blob=new Blob(buffers);
+  return URL.createObjectURL(blob);
+}
 
-  const script = document.createElement("script");
-  script.src = GAME_PATH + "runner.js";
-  document.body.appendChild(script);
+function getParts(base, start, end){
+  const arr=[];
+  for(let i=start;i<=end;i++) arr.push(base+'.part'+i);
+  return arr;
+}
 
-  // Setup the Module object (used by runner.js)
-  window.Module = {
-    canvas: canvas,
-    preRun: [],
-    postRun: [],
-    print: (t) => console.log(t),
-    printErr: (t) => console.error(t),
-    locateFile: (path) => GAME_PATH + path
+async function startGame(){
+  document.getElementById("content").style.display="none";
+  const canvas=document.getElementById("gameCanvas");
+  canvas.style.display="block";
+
+  // Merge game.unx parts
+  const gameUrl = await mergeFiles(getParts(GAME_PATH+'game.unx',1,5));
+
+  // Patch fetch and XHR so runner.js sees the merged game.unx
+  const originalFetch = window.fetch;
+  window.fetch = async function(url, options){
+    if(typeof url==='string' && url.includes('game.unx')) url = gameUrl;
+    else if(url instanceof Request && url.url.includes('game.unx')) url = new Request(gameUrl, url);
+    return originalFetch.call(this,url,options);
   };
+  const originalXHR = XMLHttpRequest.prototype.open;
+  XMLHttpRequest.prototype.open = function(method,url,...rest){
+    if(url.includes('game.unx')) url=gameUrl;
+    return originalXHR.call(this,method,url,...rest);
+  };
+
+  // Setup Module for runner
+  window.Module={
+    canvas: canvas,
+    preRun:[],
+    postRun:[],
+    print:t=>console.log(t),
+    printErr:t=>console.error(t),
+    locateFile:path=>GAME_PATH+path
+  };
+
+  // Load index.js then runner.js
+  const idx=document.createElement("script");
+  idx.src=GAME_PATH+'index.js';
+  idx.onload=()=>{
+    const run=document.createElement("script");
+    run.src=GAME_PATH+'runner.js';
+    document.body.appendChild(run);
+  };
+  document.body.appendChild(idx);
 }
 </script>
 </body>
