@@ -1,0 +1,350 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>am - Welcome</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    /* 90s / 1998 vibe */
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: #0066cc;
+      font-family: "Courier New", Courier, monospace;
+      color: #ffffcc;
+      font-size: 16px;
+      /* faux tiled background with small repeating pattern */
+      background-image:
+        radial-gradient(circle at 10% 10%, rgba(255,255,255,0.04) 1px, transparent 2px),
+        linear-gradient(45deg, rgba(0,0,0,0.02) 1px, transparent 1px);
+      background-size: 12px 12px, 60px 60px;
+    }
+
+    .page {
+      width: 760px; /* classic 800x600 minus margins */
+      margin: 18px auto;
+      border: 4px ridge #333;
+      background: linear-gradient(#003b6f, #00304f);
+      padding: 12px;
+      box-shadow: 6px 6px 0 rgba(0,0,0,0.4);
+    }
+
+    /* Header box that looks like old table header */
+    .header {
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="760" height="100"><rect width="760" height="100" fill="%23002244"/><text x="30" y="58" font-family="Courier New, monospace" font-size="42" fill="%23ffcc33">am.am</text></svg>') no-repeat left center;
+      height: 100px;
+      padding-left: 210px;
+      border: 2px outset #999;
+      color: #ffcc33;
+      display: flex;
+      align-items: center;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      margin: 0;
+      text-shadow: 1px 1px 0 #111;
+    }
+
+    .nav {
+      margin-top: 8px;
+      padding: 6px;
+      background: #112f4a;
+      border: 2px groove #223;
+      color: #dfefff;
+      font-size: 13px;
+    }
+
+    .content {
+      margin-top: 12px;
+      background: linear-gradient(#001f3a, #00293f);
+      padding: 12px;
+      border: 2px outset #112;
+      min-height: 260px;
+    }
+
+    .thanks {
+      font-size: 24px;
+      color: #fffbcc;
+      background: rgba(255,255,255,0.02);
+      padding: 8px;
+      border: 2px inset #223;
+      width: fit-content;
+      margin-bottom: 12px;
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+    }
+
+    /* Retro blinking (like <blink>) */
+    @keyframes blink {
+      0%,49% { opacity: 1; }
+      50%,100% { opacity: 0; }
+    }
+    .blink {
+      animation: blink 1s step-start infinite;
+      color: #ffd700;
+    }
+
+    /* Sliding AM boxes using CSS animation (1998 feel) */
+    .ticker {
+      overflow: hidden;
+      border: 2px solid #445;
+      background: linear-gradient(#11334a,#0b2840);
+      padding: 6px;
+      margin: 8px 0;
+    }
+
+    .slide-row {
+      display: inline-block;
+      white-space: nowrap;
+      font-weight: bold;
+      font-size: 20px;
+      color: #ffeebb;
+    }
+
+    /* multiple speeds */
+    .slow { animation: slideLeft 22s linear infinite; }
+    .med  { animation: slideLeft 14s linear infinite; }
+    .fast { animation: slideLeft 7s linear infinite; }
+
+    @keyframes slideLeft {
+      0%   { transform: translateX(0%); }
+      100% { transform: translateX(-50%); } /* we duplicate content so -50% reveals loop */
+    }
+
+    /* old-school footer */
+    .footer {
+      margin-top: 12px;
+      font-size: 12px;
+      color: #cfe6ff;
+      border-top: 1px dashed #234;
+      padding-top: 8px;
+    }
+
+    /* fake 3D button */
+    .button {
+      display:inline-block;
+      padding:8px 12px;
+      background:#ffcc33;
+      color:#222;
+      border:2px outset #fff;
+      text-decoration:none;
+      font-weight:bold;
+      margin-right:10px;
+    }
+
+    /* "visitor counter" style box */
+    .counter {
+      display:inline-block;
+      background:#001a2b;
+      color:#7fffd4;
+      padding:6px 10px;
+      border:2px inset #123;
+      font-weight:bold;
+    }
+
+    /* small screens fallback */
+    @media (max-width:780px) {
+      .page { width: 96%; }
+      .header { padding-left: 16px; height: 80px; background-size: 180px 80px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="header" role="banner">
+      <!-- Simulated logo on left (SVG data URL included in CSS) -->
+      <div>
+        <h1>Thanks for visiting fizikdersler.cfd</h1>
+      </div>
+    </div>
+
+    <div class="content" role="main">
+      <div class="thanks">thanks for visiting <span style="color:#ffd27f">fizikdersler.cfd</span> <span class="blink">★</span></div>
+
+      <!-- Marquee lines using legacy <marquee> for authenticity + CSS sliding rows -->
+      <div style="margin-bottom:10px;">
+        <marquee behavior="scroll" direction="left" scrollamount="8" style="color:#ffd; background:#001; padding:6px; border:2px solid #224;">
+          AM AM AM AM AM AM AM AM AM AM AM AM AM AM AM AM AM AM AM AM AM AM
+        </marquee>
+      </div>
+
+      <div class="ticker" aria-hidden="true">
+        <!-- Duplicate content to create seamless loop with CSS animation -->
+        <div class="slide-row slow" aria-hidden="true">
+          <span style="margin-right:24px;">▸ AM ▸ AM ▸ AM ▸ AM ▸ AM ▸ AM ▸ AM ▸ AM ▸ AM ▸ AM ▸ AM ▸ AM ▸</span>
+          <span style="margin-right:24px;">▸ AM ▸ AM ▸ AM ▸ AM ▸ AM ▸ AM ▸ AM ▸ AM ▸ AM ▸ AM ▸ AM ▸ AM ▸</span>
+        </div>
+      </div>
+
+      <div class="ticker" aria-hidden="true">
+        <div class="slide-row med" aria-hidden="true">
+          <span style="margin-right:20px;">★ AM AM AM AM AM AM AM ★</span>
+          <span style="margin-right:20px;">★ AM AM AM AM AM AM AM ★</span>
+        </div>
+      </div>
+
+      <div class="ticker" aria-hidden="true">
+        <div class="slide-row fast" aria-hidden="true">
+          <span style="margin-right:16px;">>>> AM AM AM AM >>> AM AM AM AM >>> AM AM AM AM</span>
+          <span style="margin-right:16px;">>>> AM AM AM AM >>> AM AM AM AM >>> AM AM AM AM</span>
+        </div>
+      </div>
+
+      <!-- A faux GIF made with repeating text inside a bordered box for nostalgia -->
+      <div style="margin-top:10px; display:flex; gap:12px; align-items:center;">
+        <div style="width:120px;height:90px;border:3px dotted #557; background:#002; display:flex; align-items:center; justify-content:center; color:#ffefc6; font-weight:bold;">
+          <div id="amFlash" style="font-size:26px">AM</div>
+        </div>
+
+        <div style="flex:1; color:#dfefff">
+          <p style="margin:0 0 6px 0;">
+            Welcome to <strong>fizikdersler.cfd</strong> — the thing you most need: <span style="color:#ffd27f">AM</span>.
+          </p>
+          <p style="margin:0;">
+            This site was made in order to honor the big 2: A&M.
+          </p>
+        </div>
+      </div>
+
+      <div style="margin-top:14px;">
+        <span class="counter" id="visitorCounter">visitors: 0</span>
+        <span style="margin-left:10px; font-size:12px; color:#aeeeff;">local visitor counter</span>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>© <script>document.write(new Date().getFullYear())</script> fizikdersler.cfd</div>
+      <div style="margin-top:6px; font-size:11px; color:#bfe0ff;">
+        last updated: <span id="updatedDate"></span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Local visitor counter (keeps count in browser storage)
+    (function(){
+      const key = 'am_dot_com_local_visitors_v1';
+      try {
+        let n = parseInt(localStorage.getItem(key) || '0', 10);
+        n = n + 1;
+        localStorage.setItem(key, n);
+        document.getElementById('visitorCounter').textContent = 'visitors: ' + n;
+      } catch(e) {
+        document.getElementById('visitorCounter').textContent = 'visitors: N/A';
+      }
+    })();
+
+    // small "flash" animation for AM box using JS
+    (function(){
+      const el = document.getElementById('amFlash');
+      let on = true;
+      setInterval(() => {
+        el.style.opacity = on ? '1' : '0.12';
+        on = !on;
+      }, 500);
+    })();
+
+    // simple clock in header
+    (function(){
+      function pad(n){ return n < 10 ? '0' + n : n; }
+      function tick(){
+        const d = new Date();
+        document.getElementById('clock').textContent = pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
+      }
+      tick(); setInterval(tick, 1000);
+    })();
+
+    // display a static "last updated" date (today)
+    document.getElementById('updatedDate').textContent = (new Date()).toLocaleDateString();
+
+    // Accessibility: Stop marquee when user hovers over page (old browsers didn't do this)
+    Array.from(document.getElementsByTagName('marquee')).forEach(m => {
+      m.addEventListener('mouseover', () => { m.stop && m.stop(); });
+      m.addEventListener('mouseout',  () => { m.start && m.start(); });
+    });
+  </script>
+<!-- Transparent Gate + Random Music Selection -->
+<div id="siteGate">
+  <style>
+    #siteGate {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      backdrop-filter: blur(4px);
+      font-family: Arial, sans-serif;
+    }
+    #siteGate .popup {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 10px;
+      padding: 25px 45px;
+      text-align: center;
+      color: #fff;
+      box-shadow: 0 0 25px rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+      animation: fadeIn 0.5s ease;
+    }
+    #siteGate .popup h2 {
+      margin: 0 0 10px 0;
+      font-weight: normal;
+    }
+    #siteGate button {
+      margin-top: 15px;
+      background: rgba(255,255,255,0.25);
+      border: 1px solid rgba(255,255,255,0.5);
+      color: white;
+      padding: 8px 22px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    #siteGate button:hover {
+      background: rgba(255,255,255,0.4);
+    }
+    @keyframes fadeOut {
+      to { opacity: 0; visibility: hidden; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+
+  <div class="popup">
+    <h2>⚠️</h2>
+    <p>Müzik çalması için "Devam Et" tuşuna basmanız lazım.</p>
+    <button id="enterBtn">Devam Et</button>
+  </div>
+</div>
+
+<audio id="bgmusic" loop></audio>
+
+<script>
+  const gate = document.getElementById("siteGate");
+  const btn = document.getElementById("enterBtn");
+  const music = document.getElementById("bgmusic");
+
+  const songs = [
+    "music1.mp3",
+    "music2.mp3",
+    "music3.mp3",
+    "music4.mp3"
+  ];
+
+  const randomSong = songs[Math.floor(Math.random() * songs.length)];
+  music.src = randomSong;
+
+  btn.addEventListener("click", () => {
+    music.volume = 0.5;
+    music.play().catch(() => console.log("Autoplay blocked"));
+
+    gate.style.animation = "fadeOut 0.7s forwards";
+    setTimeout(() => gate.remove(), 700);
+  });
+</script>
+</body>
+</html>
